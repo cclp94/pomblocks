@@ -67,7 +67,7 @@ export default function Pomodoro() {
   }
 
 
-  return <main className={styles.container}>
+  return <div className={styles.container}>
     <section className={styles.controls}>
       <span>cycles: {cycleCount}</span>
       <RestartAltIcon onClick={() => resetTimer()} />
@@ -76,5 +76,5 @@ export default function Pomodoro() {
     <section className={styles.timer}>
       <Timer time={timeMs} percentage={percentage} isRest={isRest} toggleTimer={toggleTimer} />
     </section>
-  </main>
+  </div>
 }
