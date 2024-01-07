@@ -1,8 +1,8 @@
 {
-  "name": "electro-hello",
-  "productName": "electro-hello",
+  "name": "pomblocks",
+  "productName": "pomblocks",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "A pomodoro desktop application",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
@@ -12,8 +12,8 @@
     "lint": "eslint --ext .ts,.tsx ."
   },
   "keywords": [],
-  "author": "cpaiva",
-  "license": "MIT",
+  "author": "cclp94",
+  "license": "GPL-3.0 license",
   "devDependencies": {
     "@electron-forge/cli": "^7.2.0",
     "@electron-forge/maker-deb": "^7.2.0",
