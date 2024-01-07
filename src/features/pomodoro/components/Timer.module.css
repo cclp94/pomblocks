@@ -1,0 +1,39 @@
+
+:root {
+  --timer-width: 300px;
+  --inside-portion-per: 94%;
+
+  --active-timer-color: #fe5934;
+  --rest-timer-color: #309fee;
+}
+
+.timer {
+  cursor: pointer;
+  width: var(--timer-width);
+  height: var(--timer-width);
+  border-radius: 50%;
+  background: conic-gradient(var(--active-timer-color) 5%, 0, transparent );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 2s;
+}
+
+.counter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-weight: bold;
+  color: #555;
+  width: var(--inside-portion-per);
+  height: var(--inside-portion-per);
+  background: white;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.icon {
+  color: #c2c2c2;
+}

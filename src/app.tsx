@@ -1,11 +1,12 @@
+import React from 'react';
 import { createRoot } from 'react-dom/client';
 import MenuHeader from './components/MenuHeader';
-import Pomodoro from './components/Pomodoro';
+import Pomodoro from './pages/Pomodoro';
 
-const root = createRoot(document.body);
+const root = createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  <main className="theme main">
+  <React.Fragment>
     <MenuHeader />
     <Pomodoro />
-  </main>
+  </React.Fragment>
 );

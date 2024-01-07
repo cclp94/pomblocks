@@ -40,6 +40,8 @@
     "typescript-plugin-css-modules": "^5.0.2"
   },
   "dependencies": {
+    "@mui/icons-material": "^5.15.3",
+    "@mui/material": "^5.15.3",
     "electron-squirrel-startup": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
