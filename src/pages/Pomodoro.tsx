@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { Timer } from "../features/pomodoro";
+import { Cycles, Timer } from "../features/pomodoro";
 import styles from "./Pomodoro.module.css";
 
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
-import { Cycles } from "../features/pomodoro/components/Cycles";
 
 // Represent each pomodoro state. Value is the timer in minutes
 enum PomState {

@@ -1,6 +1,6 @@
 import styles from './Cycles.module.css';
 
-export function Cycles({ cycles, isRunning, isRest}: {cycles: number, isRunning: boolean, isRest: boolean}) {
+export default function Cycles({ cycles, isRunning, isRest}: {cycles: number, isRunning: boolean, isRest: boolean}) {
   const BLOCK_COUNT = 4;
 
   const renderBlocks = Array(BLOCK_COUNT).fill(0).map((_, i) => {
