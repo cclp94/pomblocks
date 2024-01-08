@@ -1,14 +1,13 @@
 
 :root {
-  --timer-width: 300px;
-  --inside-portion-per: 94%;
+  --timer-width: 200px;
+  --inside-portion-per: 93%;
 
   --active-timer-color: #fe5934;
   --rest-timer-color: #309fee;
 }
 
 .timer {
-  cursor: pointer;
   width: var(--timer-width);
   height: var(--timer-width);
   border-radius: 50%;
@@ -32,6 +31,8 @@
   align-items: center;
   justify-content: center;
   display: flex;
+  font-size: 3.5rem;
+  font-weight: 100;
 }
 
 .icon {

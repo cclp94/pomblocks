@@ -3,6 +3,9 @@ import { Timer } from "../features/pomodoro";
 import styles from "./Pomodoro.module.css";
 
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
+import { Cycles } from "../features/pomodoro/components/Cycles";
 
 // Represent each pomodoro state. Value is the timer in minutes
 enum PomState {
@@ -12,8 +15,8 @@ enum PomState {
 }
 
 export default function Pomodoro() {
-  const ACTIVE_TIMER_MIN = 0.2;
-  const REST_TIMER_MIN = 0.1;
+  const ACTIVE_TIMER_MIN = 0.05;
+  const REST_TIMER_MIN = 0.02;
   const MIN_TO_MS = 60 * 1000
   const FPS = 120;
 
@@ -69,12 +72,17 @@ export default function Pomodoro() {
 
   return <div className={styles.container}>
     <section className={styles.controls}>
-      <span>cycles: {cycleCount}</span>
+      <Cycles cycles={cycleCount} isRunning={isRunning} isRest={isRest} />
       <RestartAltIcon onClick={() => resetTimer()} />
       {/* <button onClick={() => setIsRunning(true)} disabled={isRunning}>Start Timer</button> */}
     </section>
     <section className={styles.timer}>
-      <Timer time={timeMs} percentage={percentage} isRest={isRest} toggleTimer={toggleTimer} />
+      <Timer time={timeMs} percentage={percentage} isRest={isRest} />
+      {
+      isRunning 
+        ? <PauseCircleOutlineIcon fontSize="large" className={styles.icon} onClick={toggleTimer} />
+        : <PlayCircleOutlineIcon fontSize="large" className={styles.icon} onClick={toggleTimer} />
+      }
     </section>
   </div>
 }

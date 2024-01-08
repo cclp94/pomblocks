@@ -5,6 +5,10 @@ body {
   color: #222;
 }
 
+#root {
+  height: 100vh;
+}
+
 .block-style {
   font-family: 'Play', sans-serif;
 }
