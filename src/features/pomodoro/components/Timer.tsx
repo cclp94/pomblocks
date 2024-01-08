@@ -1,4 +1,4 @@
-import styles from './Timer.module.css';
+import styles from '../styles/Timer.module.css';
 
 export type TimerProps = {
   time: number;

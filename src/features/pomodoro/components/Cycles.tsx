@@ -1,4 +1,4 @@
-import styles from './Cycles.module.css';
+import styles from '../styles/Cycles.module.css';
 
 export default function Cycles({ cycles, isRunning, isRest}: {cycles: number, isRunning: boolean, isRest: boolean}) {
   const BLOCK_COUNT = 4;
