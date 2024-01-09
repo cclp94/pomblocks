@@ -1,13 +1,12 @@
 import styles from '../styles/Cycles.module.css';
 
-export default function Cycles({ cycles, isRunning, isRest}: {cycles: number, isRunning: boolean, isRest: boolean}) {
-  const BLOCK_COUNT = 4;
+export default function Cycles({ cycleCount, cycles, isRunning, isRest}: {cycles: number, cycleCount: number, isRunning: boolean, isRest: boolean}) {
 
-  const renderBlocks = Array(BLOCK_COUNT).fill(0).map((_, i) => {
+  const renderBlocks = Array(cycles).fill(0).map((_, i) => {
     let className = styles.cycle;
-    if (i < cycles) {
+    if (i < cycleCount) {
       className += ` ${styles.complete}`
-    } else if (i === cycles) {
+    } else if (i === cycleCount) {
       if (isRunning) {
         className += ` ${styles.ongoing}`
       } else if (isRest) {
@@ -15,7 +14,8 @@ export default function Cycles({ cycles, isRunning, isRest}: {cycles: number, is
       }
     }
     return <li key={i} className={className}></li>
-  })
+  });
+
   return <ul className={styles.container}>
     {renderBlocks}
     </ul>

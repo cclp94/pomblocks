@@ -1,33 +1,32 @@
 import { useEffect, useRef, useState } from "react";
-import { Cycles, Timer } from "../features/pomodoro";
+import { Cycles, Settings, Timer } from "../features/pomodoro";
 import styles from "./Pomodoro.module.css";
 
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
-
-// Represent each pomodoro state. Value is the timer in minutes
-enum PomState {
-  ACTIVE = 0.2,
-  REST = 0.1,
-  LONG_REST = 0.1
-}
+import TuneSharpIcon from '@mui/icons-material/TuneSharp';
+import { useSettings } from "../hooks/useSettings";
 
 export default function Pomodoro() {
-  const ACTIVE_TIMER_MIN = 0.05;
-  const REST_TIMER_MIN = 0.02;
   const MIN_TO_MS = 60 * 1000
-  const FPS = 120;
+  const FPS = 60;
 
-  const [timeMs, setTimeMs] = useState(ACTIVE_TIMER_MIN * MIN_TO_MS);
+  const [settings, setSettings] = useSettings();
+  const [timeMs, setTimeMs] = useState(settings.workMin * MIN_TO_MS);
   const [isRest, setIsRest] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
   const [cycleCount, setCycleCount] = useState(0);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const activeTimer = useRef<NodeJS.Timeout>();
 
-  const currentTimerSec = (isRest ? REST_TIMER_MIN : ACTIVE_TIMER_MIN) * MIN_TO_MS;
+  const currentTimerSec = (isRest ? settings.shortRestMin : settings.workMin) * MIN_TO_MS;
   const percentage = timeMs / currentTimerSec;
   const renderFrequencyMs = 1000 / FPS;
+
+  useEffect(() => {
+    resetTimer();
+  }, [settings])
 
   function incrementCycle() {
     setCycleCount((currentCycle) => currentCycle + 1);
@@ -44,7 +43,7 @@ export default function Pomodoro() {
           incrementCycle();
         }
       }
-      const nextTimerSec = (nextIsRest ? REST_TIMER_MIN : ACTIVE_TIMER_MIN) * MIN_TO_MS;
+      const nextTimerSec = (nextIsRest ? settings.shortRestMin : settings.workMin) * MIN_TO_MS;
       setTimeMs(nextTimerSec);
       return nextIsRest;
     });
@@ -71,8 +70,10 @@ export default function Pomodoro() {
 
   return <div className={styles.container}>
     <section className={styles.controls}>
-      <Cycles cycles={cycleCount} isRunning={isRunning} isRest={isRest} />
+      <Cycles cycles={settings.cycles} cycleCount={cycleCount} isRunning={isRunning} isRest={isRest} />
       <RestartAltIcon onClick={() => resetTimer()} />
+      <TuneSharpIcon  onClick={() => setIsSettingsOpen(value => !value)} />
+      <Settings show={isSettingsOpen} settings={settings} onSettingsChange={setSettings}/>
       {/* <button onClick={() => setIsRunning(true)} disabled={isRunning}>Start Timer</button> */}
     </section>
     <section className={styles.timer}>
