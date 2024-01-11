@@ -1,20 +1,34 @@
-import { useEffect, useState } from "react"
-import { PomodoroSettings } from "../types/PomodoroSettings"
+import { useEffect, useRef, useState } from "react";
+import { Window } from "../types/Window";
+import { PomodoroSettings } from "../types/PomodoroSettings";
 
-const defaultSettings: PomodoroSettings = {
-  cycles: 3,
-  workMin: 0.05,
-  shortRestMin: 0.02,
-  longRestMin: 0.02,
-}
+declare const window: Window;
 
 export function useSettings() {
-  const [settings, setSettings] = useState(defaultSettings);
+  const [settings, setSettings] = useState<PomodoroSettings>();
+  const [error, setError] = useState<string | null>();
+  const prevSettings = useRef<PomodoroSettings>();
 
   useEffect(() => {
-    // TODO
-    // update settings here
+    const getPomSettings = async () => {
+      const s = await window.settings.getPomSettings();
+      prevSettings.current = s;
+      setSettings(s);
+    }
+    const saveSettings = async (s: PomodoroSettings) => {
+      const error: string | null = await window.settings.setPomSettings(s);
+      if (!error) {
+        prevSettings.current = s;
+      }
+      setError(error);
+    }
+    if (!prevSettings.current) {
+      getPomSettings()
+      // Dumb deep equality to avoid useless resaves. There's definetly a better way
+    } else if (!!settings && JSON.stringify(prevSettings.current) !== JSON.stringify(settings)) {
+      saveSettings(settings);
+    }
   }, [settings])
 
-  return [settings, setSettings] as [PomodoroSettings, React.Dispatch<React.SetStateAction<PomodoroSettings>>];
+  return [settings, setSettings, error] as [PomodoroSettings, React.Dispatch<React.SetStateAction<PomodoroSettings>>, string | null];
 }

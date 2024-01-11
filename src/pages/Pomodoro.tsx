@@ -1,26 +1,26 @@
+import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import TuneSharpIcon from '@mui/icons-material/TuneSharp';
 import { useEffect, useRef, useState } from "react";
 import { Cycles, Settings, Timer } from "../features/pomodoro";
+import { useSettings } from "../hooks/useSettings";
 import styles from "./Pomodoro.module.css";
 
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
-import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
-import TuneSharpIcon from '@mui/icons-material/TuneSharp';
-import { useSettings } from "../hooks/useSettings";
 
 export default function Pomodoro() {
   const MIN_TO_MS = 60 * 1000
   const FPS = 60;
 
   const [settings, setSettings] = useSettings();
-  const [timeMs, setTimeMs] = useState(settings.workMin * MIN_TO_MS);
+  const [timeMs, setTimeMs] = useState(settings?.workMin * MIN_TO_MS);
   const [isRest, setIsRest] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
   const [cycleCount, setCycleCount] = useState(0);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const activeTimer = useRef<NodeJS.Timeout>();
 
-  const currentTimerSec = (isRest ? settings.shortRestMin : settings.workMin) * MIN_TO_MS;
+  const currentTimerSec = (isRest ? settings?.shortRestMin : settings?.workMin) * MIN_TO_MS;
   const percentage = timeMs / currentTimerSec;
   const renderFrequencyMs = 1000 / FPS;
 
@@ -43,7 +43,7 @@ export default function Pomodoro() {
           incrementCycle();
         }
       }
-      const nextTimerSec = (nextIsRest ? settings.shortRestMin : settings.workMin) * MIN_TO_MS;
+      const nextTimerSec = (nextIsRest ? settings?.shortRestMin : settings?.workMin) * MIN_TO_MS;
       setTimeMs(nextTimerSec);
       return nextIsRest;
     });
@@ -70,10 +70,10 @@ export default function Pomodoro() {
 
   return <div className={styles.container}>
     <section className={styles.controls}>
-      <Cycles cycles={settings.cycles} cycleCount={cycleCount} isRunning={isRunning} isRest={isRest} />
+      <Cycles cycles={settings?.cycles} cycleCount={cycleCount} isRunning={isRunning} isRest={isRest} />
       <RestartAltIcon onClick={() => resetTimer()} />
       <TuneSharpIcon  onClick={() => setIsSettingsOpen(value => !value)} />
-      <Settings show={isSettingsOpen} settings={settings} onSettingsChange={setSettings}/>
+      { settings && <Settings show={isSettingsOpen} settings={settings} onSettingsChange={setSettings}/> }
       {/* <button onClick={() => setIsRunning(true)} disabled={isRunning}>Start Timer</button> */}
     </section>
     <section className={styles.timer}>
